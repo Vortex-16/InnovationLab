@@ -7,8 +7,18 @@ ctk.set_default_color_theme("blue")
 # Button click function
 def button_click(value):
     display.configure(state="normal")
+    current = display.get()
+
+    # Prevent multiple decimals in a single number
+    if value == ".":
+        last_number = current.split("+")[-1].split("-")[-1].split("*")[-1].split("/")[-1]
+        if "." in last_number:
+            display.configure(state="disabled")
+            return
+
     display.insert("end", value)
     display.configure(state="disabled")
+
 
 # Clear display
 def clear_display():
@@ -21,16 +31,23 @@ def calculate():
     expression = display.get()
     try:
         result = eval(expression)
+
+        # Fix floating-point precision
+        if isinstance(result, float):
+            result = round(result, 10)
+            result = int(result) if result.is_integer() else result
+
         display.configure(state="normal")
         display.delete(0, "end")
         display.insert(0, str(result))
-        print("Result :",result)        
         display.configure(state="disabled")
+
     except:
         display.configure(state="normal")
         display.delete(0, "end")
         display.insert(0, "Error")
         display.configure(state="disabled")
+
 
 # Window
 app = ctk.CTk()
