@@ -66,7 +66,7 @@ def calculate():
 
 # ================= Window =================
 app = ctk.CTk()
-app.title("Clean Calculator")
+app.title("Simple Calculator")
 app.geometry("380x550")
 app.resizable(False, False)
 
