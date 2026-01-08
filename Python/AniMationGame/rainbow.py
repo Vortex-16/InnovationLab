@@ -7,3 +7,4 @@ while True:
     console.print(Text("🌈 AMAZING TERMINAL", style="bold magenta on black"))
     time.sleep(0.5)
     console.clear()
+  
