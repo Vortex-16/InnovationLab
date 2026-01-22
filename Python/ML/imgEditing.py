@@ -149,7 +149,7 @@ mains.configure(bg='#323946')
 
 
 # Default image
-img = Image.open("Python/ML/images/bear.jpg")
+img = Image.open("Python/ML/images/dog.jpg")
 # "logo.png" image will be available after this code
 # To run this code, this image must be saved in your PC's or you should change 
 # the "logo.png" to your image name in this code.
