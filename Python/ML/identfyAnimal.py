@@ -1,32 +1,38 @@
 from ultralytics import YOLO
 import cv2
 import os
+import pandas as pd
 
 model = YOLO("yolov8n.pt")
 
 image_folder = "Python/ML/images"
 output_folder = "Python/ML/output"
+excel_file = "Python/ML/results.xlsx"
 
 os.makedirs(output_folder, exist_ok=True)
 
-# Loop through all images
+data = []
+
+# Loop through images
 for image_name in os.listdir(image_folder):
     image_path = os.path.join(image_folder, image_name)
 
     # Detect objects
     results = model(image_path)
 
-    # Draw boxes on image
     annotated_image = results[0].plot()
-
-    # Save output image
     cv2.imwrite(os.path.join(output_folder, image_name), annotated_image)
 
-    # Print detected objects
-    print(f"\nImage: {image_name}")
     for box in results[0].boxes:
         class_id = int(box.cls[0])
         label = model.names[class_id]
         confidence = float(box.conf[0])
-        print(f" - {label} ({confidence:.2f})")
-print("Detection complete. Check the output folder for results.")
+
+        # Add row to data list
+        data.append([image_name, label, confidence])
+
+# Convert to Excel
+df = pd.DataFrame(data, columns=["Image Name", "Object", "Confidence"])
+df.to_excel(excel_file, index=False)
+
+print(" Detection results saved to results.xlsx")
