@@ -29,4 +29,3 @@ new_data = pd.DataFrame([[3.3]], columns=["hours_studied"]) #Enter Study time he
 result = model.predict(new_data)
 
 print("Pass" if result[0] == 1 else "Fail")
-
